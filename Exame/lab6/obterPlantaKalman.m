@@ -35,9 +35,25 @@ planta.quantizacaoEncoder = 2 * pi / 2^(bitsEncoder); % quantizacao do encoder
 
 
 % Parâmetros pro filtro de Kalman
-planta.Kalman.A = [0 1; 0 -1*planta.Beq/planta.Jeq];
-planta.Kalman.B = [0 ; planta.N*planta.eta*planta.Kt/planta.Jeq];
+Ts = 1/1000;
+
+A = [0 1; 0 -1*planta.Beq/planta.Jeq];
+B = [0 ; planta.N*planta.eta*planta.Kt/planta.Jeq];
 planta.Kalman.C = [1 0];
 planta.Kalman.D = 0;
+Q = diag([0.05 0.05]);
+R = 1;
+G = eye(2);
 
+% Discreto
+
+big=expm([A B;zeros(1,3)]*Ts);
+planta.Kalman.A = big(1:2,1:2);
+planta.Kalman.B = big(1:2,3);
+
+big=expm([A G*Q*G;zeros(2) -A']*Ts);
+Ad = big(1:2,1:2);
+planta.Kalman.Q = big(1:2,3:4) * Ad';
+
+planta.Kalman.R = R / Ts;
 end
