@@ -1,4 +1,4 @@
-function avaliarQuantizacao(controlador, planta)
+function avaliarQuantizacao_PB_Sem_Ruido(controlador, planta)
 % avaliarMalhaPosicao(controlador, planta) avalia o efeito da quantizacao 
 % do encoder no servomotor de posicao. A struct controlador eh dada por:
 % controlador.posicao.Kp: ganho proporcional do controlador de posicao.
@@ -36,7 +36,7 @@ for i=1:length(vetorBitsEncoder)
     assignin('base', 'controlador', controlador);
     assignin('base', 'planta', planta);
 
-    outs{i} = sim('servomotor_posicao');
+    outs{i} = sim('servomotor_posicao_PB_Sem_Ruido.slx');
 end
 
 %% Tracando graficos
