@@ -1,4 +1,4 @@
-function simularRespostaDegrau_PB_Com_Ruido(controlador, planta)
+function simularRespostaDegrau_Kalman_Com_Ruido(controlador, planta)
 % simularRespostaDegrau(controlador, planta) simula a resposta ao degrau
 % unitario do servomotor de posicao. A struct controlador eh dada por:
 % controlador.posicao.Kp: ganho proporcional do controlador de posicao.
@@ -37,7 +37,7 @@ for i = 1:length(var_thetas)
     var_theta = var_thetas(i);
     assignin('base', 'var_theta', var_theta);
     
-    out = sim('servomotor_posicao_PB_Com_Ruido_Posicao.slx');
+    out = sim('servomotor_posicao_Kalman_Ruido_Posicao.slx');
     
     signals.thetal{i} = out.thetal;
     signals.thetam{i} = out.thetam;
