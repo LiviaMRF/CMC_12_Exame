@@ -37,7 +37,7 @@ eta = planta.eta;
 Ap = pade(exp(-s*Tp / 2), 2);
 Cp = Kp + Kd*s*(a / (s+a));
 
-[num, den] = pade(Tc, 2);
+[num, den] = pade(Tc/2, 2);
 Nc = tf(num, 1);
 Dc = tf(den, 1);
 Cc = K*((Tl*s+1) / (alpha*Tl*s+1))*(1/s);
