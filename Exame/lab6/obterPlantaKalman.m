@@ -56,23 +56,23 @@ R = sigma_theta^2;
 % Ganho de Kalman contínuo
 [K,~,~] = lqe(A, eye(2), C, Q, R);
 
-%Q = diag([0.05, 0.05]);
-%R = 1;
+Q = diag([0.05, 0.05]);
+R = 1;
 planta.KalmanCont.K = K;
 
-%G = eye(2);
+G = eye(2);
 
 % Discreto
 
-%big=expm([A B;zeros(1,3)]*Ts);
-%planta.Kalman.A = big(1:2,1:2);
-%planta.Kalman.B = big(1:2,3);
-%planta.Kalman.C = C;
-%planta.Kalman.D = D;
+big=expm([A B;zeros(1,3)]*Ts);
+planta.Kalman.A = big(1:2,1:2);
+planta.Kalman.B = big(1:2,3);
+planta.Kalman.C = C;
+planta.Kalman.D = D;
 
-%big=expm([A G*Q*G;zeros(2) -A']*Ts);
-%Ad = big(1:2,1:2);
-%planta.Kalman.Q = big(1:2,3:4) * Ad';
+big=expm([A G*Q*G;zeros(2) -A']*Ts);
+Ad = big(1:2,1:2);
+planta.Kalman.Q = big(1:2,3:4) * Ad';
 
-%planta.Kalman.R = R / Ts;
+planta.Kalman.R = R / Ts;
 end
