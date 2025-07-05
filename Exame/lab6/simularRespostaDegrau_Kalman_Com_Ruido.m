@@ -16,7 +16,7 @@ function simularRespostaDegrau_Kalman_Com_Ruido(controlador, planta)
 % A struct planta contem os parametros da planta e pode ser obtida atraves
 % de planta = obterPlantaServoPosicao().
 
-var_thetas = [0, 0.01, 0.1, 1];  % Variâncias do ruído
+var_thetas = [0, 0.01, 0.1, 1, 10, 100];  % Variâncias do ruído
 tf = 0.5;
 
 % Referência degrau

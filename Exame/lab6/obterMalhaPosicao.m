@@ -42,7 +42,23 @@ Nc = tf(num, 1);
 Dc = tf(den, 1);
 Cc = K*((Tl*s+1) / (alpha*Tl*s+1))*(1/s);
 
-Ga = minreal((N*eta*Kt*Cp*Ap*Cc*Nc) / (s*(Jeq*s+Beq)*(L*s+R)*Dc + N^2*eta*Kt^2*s*Dc + s*(Jeq*s + Beq)*Cc*Nc));
-Gf = minreal(feedback(Ga, 1));
+% Modelo do filtro de KalmanCont como sistema de estados
+A = planta.KalmanCont.A;
+C = planta.KalmanCont.C;
+K = planta.KalmanCont.K;
 
+Ak = A - K*C;
+Bk = K;
+Ck = [1 0];
+Dk = 0;
+
+Hk = ss(Ak, Bk, Ck, Dk);
+
+% Malha aberta com o KalmanCont incluído
+numGa = N * eta * Kt * Cp * Hk * Ap * Cc * Nc;
+denGa = s*(Jeq*s + Beq)*(L*s + R)*Dc + N^2*eta*Kt^2*s*Dc + ...
+         s*(Jeq*s + Beq)*Cc*Nc;
+
+Ga = minreal(numGa / denGa);
+Gf = minreal(feedback(Ga, 1));
 end
